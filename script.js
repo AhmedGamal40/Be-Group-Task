@@ -111,7 +111,21 @@ window.addEventListener('wheel', function(event) {
 
 
 window.addEventListener('keydown', function(event) {
-    if (event.ctrlKey && (event.key === '+' || event.key === '-' || event.key === '0')) {
+    if (event.ctrlKey && (event.key === '+' || event.key === '-' || event.key === '0' || event.key === '=')) {
         event.preventDefault();
     }
 });
+
+// Prevent multi-finger zoom
+document.addEventListener('touchstart', function(event) {
+    if (event.touches.length > 1) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
+// Prevent pinch-to-zoom
+document.addEventListener('touchmove', function(event) {
+    if (event.scale !== undefined && event.scale !== 1) {
+        event.preventDefault();
+    }
+}, { passive: false });
